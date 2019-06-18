@@ -1,23 +1,19 @@
 import React, { FC } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import ShoppingCart from "../component/ShoppingCart";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import ShoppingCart from "../component/ShoppingCart/ShoppingCart";
 import useReactRouter from "use-react-router";
+import Checkout from '../component/Checkout/Checkout';
 
-interface IRoutesProps {
-
-}
+interface IRoutesProps {}
 const Routes: FC<IRoutesProps> = () => {
-
-  const {history} = useReactRouter();
-
+  
 
   return (
-    <BrowserRouter>
-      <Route component={ShoppingCart}/>
-    </BrowserRouter>
+    <Switch>
+      <Route path="/cart" component={ShoppingCart} />
+      <Route path="/checkout" component={Checkout} />
+    </Switch>
   );
 };
-
-
 
 export default Routes;
