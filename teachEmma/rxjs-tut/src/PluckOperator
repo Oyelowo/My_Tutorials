@@ -1,0 +1,32 @@
+//import { Observable } from "rxjs/Observable";
+import {
+  Observer,
+  fromEvent,
+  Observable,
+  ReplaySubject,
+  Subject,
+  AsyncSubject,
+  merge,
+  from
+} from "rxjs";
+import "rxjs/add/operator/pluck";
+//import "rxjs/add/operator/share";
+
+const addItem = (item: any) => {
+  const node = document.createElement("li");
+  const textNode = document.createTextNode(item);
+  node.appendChild(textNode);
+  document.getElementById("output").appendChild(node);
+};
+
+// Note: Observables can also be created with the function - from, as shown below.
+from([
+  { first: "Oyelowo", last: "D1", age: "24" },
+  { first: "Dayo", last: "Jackson", age: "24" },
+  { first: "Elon", last: "Musk", age: "24" },
+  { first: "Jane", last: "Mary", age: "24" }
+])
+  .pluck("first")
+  .subscribe((x) => {
+    addItem(x);
+  });

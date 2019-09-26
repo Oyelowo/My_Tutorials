@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "30-seconds-of-code": "^1.2.3",
+    "node": "^12.6.0"
+  }
+}

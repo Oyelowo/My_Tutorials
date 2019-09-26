@@ -1,0 +1,20 @@
+{
+  "name": "rxjs-tut",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --mode development"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "rxjs": "^6.5.2",
+    "rxjs-compat": "^6.5.2",
+    "ts-loader": "^6.0.0",
+    "typescript": "^3.4.5",
+    "webpack": "^4.31.0",
+    "webpack-dev-server": "^3.3.1"
+  }
+}

@@ -1,0 +1,35 @@
+//import { Observable } from "rxjs/Observable";
+import { Observer, fromEvent, Observable, ReplaySubject } from "rxjs";
+//import "rxjs/add/operator/share";
+
+// ReplaySubject: display any designated number of values
+
+const addItem = (item: any) => {
+  const node = document.createElement("li");
+  const textNode = document.createTextNode(item);
+  node.appendChild(textNode);
+  document.getElementById("output").appendChild(node);
+};
+
+const subject = new ReplaySubject(2);
+
+subject.subscribe(
+  data => addItem("Observer 1: ´" + data),
+  err => addItem(err),
+  () => addItem("Observer 1 Completed")
+);
+
+subject.next('The first stuff has been sent');
+subject.next('....Observer 2 about to subscribe');
+subject.next('....Another Observer 2 about to subscribe');
+
+const observer2 = subject.subscribe(
+  data => addItem("Observer 2: ´" + data)
+);
+
+subject.next('The second stuff has been sent');
+subject.next('The third has been sent');
+
+observer2.unsubscribe();
+
+subject.next('Final sent');

@@ -1,0 +1,30 @@
+//import { Observable } from "rxjs/Observable";
+import { Observer, fromEvent, Observable, Subject } from "rxjs";
+//import "rxjs/add/operator/share";
+
+const addItem = (item: any) => {
+  const node = document.createElement("li");
+  const textNode = document.createTextNode(item);
+  node.appendChild(textNode);
+  document.getElementById("output").appendChild(node);
+};
+
+const subject = new Subject();
+subject.subscribe(
+  data => addItem("Observer 1: ´" + data),
+  err => addItem(err),
+  () => addItem("Observer 1 Completed")
+);
+
+subject.next('The first stuff haas been sent');
+
+const observer2 = subject.subscribe(
+  data => addItem("Observer 2: ´" + data)
+);
+
+subject.next('The second stuff has been sent');
+subject.next('The third has been sent');
+
+observer2.unsubscribe();
+
+subject.next('Final sent');

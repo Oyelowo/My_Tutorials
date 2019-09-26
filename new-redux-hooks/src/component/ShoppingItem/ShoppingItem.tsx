@@ -1,12 +1,9 @@
-import React, { FC, useState, Dispatch } from "react";
+import React, { FC, useState } from "react";
 import "./ShoppingItem.scss";
 import { useDispatch } from "react-redux";
 import { CartActionInferred } from "../../store/cart/types";
-import {
-  incrementPrice,
-  decrementPrice,
-  addItem
-} from "../../store/cart/action";
+import { decrementPrice, addItem, incrementPrice } from '../../store/cart/action';
+import { Dispatch } from "redux";
 
 export interface ShoppingItemProps {
   id: string;
@@ -26,22 +23,35 @@ const ShoppingItem: FC<ShoppingItemProps> = ({
   const dispatch = useDispatch<Dispatch<CartActionInferred>>();
 
   const increment = () => {
-    setQuantity(quantity => quantity + 1);
+    setQuantity((quantity: number) => quantity + 1);
     dispatch(incrementPrice(price));
+    //dispatch({ type: "INCREMENT_PRICE", productPrice: price });
   };
 
   const decrement = () => {
-    setQuantity(quantity => (quantity > 0 ? quantity - 1 : 0));
+    setQuantity((quantity: number) => (quantity > 0 ? quantity - 1 : 0));
     dispatch(decrementPrice(price));
+
+    const isLast = quantity === 1;
+    if (isLast) {
+      dispatch({ type: "REMOVE_ITEM", id });
+    }
   };
 
-  const addToCart = () => {
+  const addToCart = () =>
     dispatch(addItem({ id, name, price, description, quantity }));
+
+  const deleteProduct = () => {
+    dispatch({ type: "DELETE_PRODUCT", id });
+    dispatch({ type: "REMOVE_ITEM", id });
+    dispatch({ type: "DEDUCT_ITEM_PRICE", id, quantity, productPrice: price });
   };
 
   return (
     <li className="ShoppingItem">
-      <div className="ShoppingItem__remover">X</div>
+      <div className="ShoppingItem__remover" onClick={deleteProduct}>
+        X
+      </div>
       <div className="ShoppingItem__id">{id}</div>
       <div className="ShoppingItem__name">{name}</div>
       <div className="ShoppingItem__price">€{price}</div>
@@ -50,7 +60,12 @@ const ShoppingItem: FC<ShoppingItemProps> = ({
         Quantity: <button onClick={decrement}>-</button> {quantity}{" "}
         <button onClick={increment}>+</button>
       </div>
-      <button className="ShoppingItem__adder" onClick={addToCart}>
+
+      <button
+        className="ShoppingItem__add-btn"
+        onClick={addToCart}
+        disabled={quantity === 0}
+      >
         Add to Cart
       </button>
     </li>

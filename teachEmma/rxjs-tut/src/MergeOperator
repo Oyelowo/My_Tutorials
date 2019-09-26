@@ -1,0 +1,34 @@
+//import { Observable } from "rxjs/Observable";
+import {
+  Observer,
+  fromEvent,
+  Observable,
+  ReplaySubject,
+  Subject,
+  AsyncSubject,
+  merge
+} from "rxjs";
+//import "rxjs/add/operator/share";
+
+// AsnycSubject: only last value is sent to the observer
+
+const addItem = (item: any) => {
+  const node = document.createElement("li");
+  const textNode = document.createTextNode(item);
+  node.appendChild(textNode);
+  document.getElementById("output").appendChild(node);
+};
+
+const observable = Observable.create((observer: Observer<any>) => {
+  observer.next("I am here, Guys!");
+});
+
+const observable2 = Observable.create((observer: Observer<any>) => {
+  observer.next("What's up?");
+});
+
+const newObservable = merge(observable, observable2);
+
+newObservable.subscribe((x: any) => {
+  addItem(x);
+});

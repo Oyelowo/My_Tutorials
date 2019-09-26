@@ -1,20 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes/Routes";
-import useReactRouter from 'use-react-router';
+import { BrowserRouter } from "react-router-dom";
 
 const App: React.FC = () => {
-  const { history } = useReactRouter();
-
-  useEffect(() => {
-    history.push("/cart")
-    return () => {
-    };
-  }, [])
   return (
     <>
-      <Routes />
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </>
   );
 };

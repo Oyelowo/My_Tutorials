@@ -1,0 +1,31 @@
+//import { Observable } from "rxjs/Observable";
+import { Observer, fromEvent, Observable, ReplaySubject, Subject } from "rxjs";
+//import "rxjs/add/operator/share";
+
+// ReplaySubject: display any designated number of values and also the buffertime if specified as second argument
+
+const addItem = (item: any) => {
+  const node = document.createElement("li");
+  const textNode = document.createTextNode(item);
+  node.appendChild(textNode);
+  document.getElementById("output").appendChild(node);
+};
+
+const subject = new ReplaySubject(30, 500);
+
+subject.subscribe(
+  data => addItem("Observer 1: ´" + data),
+  err => addItem(err),
+  () => addItem("Observer 1 Completed")
+);
+
+let i = 1;
+const int = setInterval(() => subject.next(i++), 100);
+
+let observer2;
+setTimeout(() => {
+    observer2 = subject.subscribe(
+        data => addItem('Observer 2: ' + data)
+    )
+    
+}, 500);

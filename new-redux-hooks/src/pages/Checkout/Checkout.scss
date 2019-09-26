@@ -1,0 +1,25 @@
+.CheckOut {
+  width: 70vw;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bolder;
+
+  &__item {
+    list-style: none;
+    padding: 10px 15px;
+    margin: 10px;
+    border: 1px solid bisque;
+  }
+
+  &__remove-btn {
+    margin-left: 5px;
+    font-size: 0.9rem;
+    font-weight: bolder;
+    padding: 5px;
+    color: white;
+    background: rgb(101, 26, 26);
+  }
+}

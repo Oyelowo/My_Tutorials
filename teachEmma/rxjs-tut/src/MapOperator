@@ -1,0 +1,26 @@
+//import { Observable } from "rxjs/Observable";
+import {
+  Observer,
+  fromEvent,
+  Observable,
+  ReplaySubject,
+  Subject,
+  AsyncSubject,
+  merge
+} from "rxjs";
+import "rxjs/add/operator/map";
+//import "rxjs/add/operator/share";
+
+// AsnycSubject: only last value is sent to the observer
+
+const addItem = (item: any) => {
+  const node = document.createElement("li");
+  const textNode = document.createTextNode(item);
+  node.appendChild(textNode);
+  document.getElementById("output").appendChild(node);
+};
+
+Observable.create((observer: Observer<any>) => {
+  observer.next("I am here, Guys!");
+}).map((val: string)=> val.toUpperCase()).subscribe((x:string)=>addItem(x))
+
